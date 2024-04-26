@@ -1,0 +1,25 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <SwitchPreferenceCompat
+        app:key="notifications"
+        app:title="Enable message notifications"/>
+
+    <ListPreference
+        app:key="water_intake"
+        app:title="Select Daily Water Intake"
+        app:entries="@array/water_intake"
+        app:entryValues="@array/water_intake_values"
+        app:useSimpleSummaryProvider="true"
+        />
+
+    <ListPreference
+        app:key="notification_rate"
+        app:title="Select Notification Rate"
+        app:entries="@array/notification_rate"
+        app:entryValues="@array/notification_rate_values"
+        app:useSimpleSummaryProvider="true"
+        />
+
+</PreferenceScreen>

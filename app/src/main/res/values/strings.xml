@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">Day Drinker</string>
+    <string name="settings" />
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string-array name="water_intake_values">
+        <item>1_cup</item>
+        <item>2_cups</item>
+        <item>3_cups</item>
+        <item>4_cups</item>
+    </string-array>
+    <string-array name="water_intake">
+        <item>1 cup</item>
+        <item>2 cups</item>
+        <item>3 cups</item>
+        <item>4 cups</item>
+    </string-array>
+    <string-array name="notification_rate_values">
+        <item>45_min</item>
+        <item>1_hour</item>
+        <item>1_hour_30_min</item>
+    </string-array>
+    <string-array name="notification_rate">
+        <item>45 min</item>
+        <item>1 hour</item>
+        <item>1 hour 30 min</item>
+    </string-array>
 </resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/subTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last 7 Days:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/labelStreak"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="20dp"
+        android:textSize="20sp"
+        android:padding="6dp"
+        android:text="Current Streak:"
+        app:layout_constraintEnd_toStartOf="@id/streak"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subTitle"
+        />
+
+    <TextView
+        android:id="@+id/streak"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:autofillHints=""
+        android:textSize="20sp"
+        android:text="N/A"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@id/labelStreak"
+        app:layout_constraintTop_toBottomOf="@id/subTitle" />
+
+    <TextView
+        android:id="@+id/labelMaxStreak"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:textSize="20sp"
+        android:padding="6dp"
+        android:text="Max Streak:"
+        app:layout_constraintEnd_toStartOf="@id/maxStreak"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/labelStreak"
+        />
+
+    <TextView
+        android:id="@+id/maxStreak"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:autofillHints=""
+        android:textSize="20sp"
+        android:text="N/A"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintStart_toEndOf="@id/labelMaxStreak"
+        app:layout_constraintTop_toBottomOf="@id/labelStreak" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
