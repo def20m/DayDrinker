@@ -16,6 +16,9 @@ public interface DayDao {
     @Query("SELECT streak FROM Day WHERE dayId = (SELECT MAX(dayId) FROM Day)")
     int getCurrentStreak();
 
+    @Query("SELECT MAX(streak) FROM Day")
+    int getMaxStreak();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addDay(Day day);
 }

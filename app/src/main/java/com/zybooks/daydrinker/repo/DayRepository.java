@@ -74,4 +74,12 @@ public class DayRepository {
         return dayDao.getCurrentWeek();
     }
 
+    public int getCurrentStreak(){
+        return dayDao.getCurrentStreak();
+    }
+
+    public int getMaxStreak(){
+        return dayDao.getMaxStreak();
+    }
+
 }
