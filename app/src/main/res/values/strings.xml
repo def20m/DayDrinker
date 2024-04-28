@@ -39,4 +39,8 @@
         <item>1 hour</item>
         <item>1 hour 30 min</item>
     </string-array>
+
+    <string name="channel_name">Log your water intake in:</string>
+    <string name="channel_description">Displays how much time is left until the user needs to log their intake.</string>
+
 </resources>
