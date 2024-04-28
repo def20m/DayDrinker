@@ -56,4 +56,9 @@ public class Day {
     public void setStreak(int streak){
         this.streak = streak;
     }
+
+    @Override
+    public String toString(){
+        return getDate() + '\t' + Integer.toString(getGoal()) + '\t' + Integer.toString(getProgress());
+    }
 }

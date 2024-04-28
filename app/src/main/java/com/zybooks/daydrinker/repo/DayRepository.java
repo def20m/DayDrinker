@@ -10,8 +10,12 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.zybooks.daydrinker.model.Day;
-import java.util.List;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,17 +34,10 @@ public class DayRepository {
         return dayRepo;
     }
 
-    private DayRepository(Context context) {
-
-        RoomDatabase.Callback databaseCallback = new RoomDatabase.Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
-            }
-        };
+    public DayRepository(Context context) {
 
         DayDatabase database = Room.databaseBuilder(context, DayDatabase.class, "day.db")
-                .addCallback(databaseCallback)
+                .allowMainThreadQueries()
                 .build();
 
         dayDao = database.dayDao();
@@ -52,7 +49,9 @@ public class DayRepository {
 
     private void firstDay(){
         Day newDay = new Day();
-        newDay.setDate(new Date().toString());
+        SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
+        String date = ft.format(new Date());
+        newDay.setDate(date);
         newDay.setDayId(0);
         newDay.setGoal(12);
         newDay.setProgress(0);
@@ -70,8 +69,13 @@ public class DayRepository {
             return dayDao.getCurrentDay();
     }
 
-    public List<Day> getCurrentWeek(){
-        return dayDao.getCurrentWeek();
+    public List<String> getCurrentWeek(){
+        List<Day> week = dayDao.getCurrentWeek();
+        List<String> weekString = new ArrayList<>();
+        for ( Day d : week ) {
+            weekString.add(d.toString());
+        }
+        return weekString;
     }
 
     public int getCurrentStreak(){

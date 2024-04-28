@@ -13,7 +13,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"/>
+
+    <ListView
+        android:id="@+id/currentWeek"
+        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/subTitle"
+        />
 
     <TextView
         android:id="@+id/labelStreak"
@@ -27,7 +36,7 @@
         app:layout_constraintEnd_toStartOf="@id/streak"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subTitle"
+        app:layout_constraintTop_toBottomOf="@id/currentWeek"
         />
 
     <TextView
