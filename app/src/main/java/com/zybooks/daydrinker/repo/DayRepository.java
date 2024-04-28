@@ -52,7 +52,7 @@ public class DayRepository {
 
     private void firstDay(){
         Day newDay = new Day();
-        newDay.setDate(new Date());
+        newDay.setDate(new Date().toString());
         newDay.setDayId(0);
         newDay.setGoal(12);
         newDay.setProgress(0);

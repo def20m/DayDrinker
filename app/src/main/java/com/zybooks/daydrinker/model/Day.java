@@ -14,7 +14,7 @@ public class Day {
     private int dayId;
 
     @ColumnInfo(name = "date")
-    private Date date;
+    private String date;
 
     @ColumnInfo(name = "goal")
     private int goal;
@@ -28,7 +28,7 @@ public class Day {
     public int getDayId(){
         return dayId;
     }
-    public Date getDate(){
+    public String getDate(){
         return date;
     }
     public int getGoal(){
@@ -44,7 +44,7 @@ public class Day {
     public void setDayId(int dayId){
         this.dayId = dayId;
     }
-    public void setDate(Date date){
+    public void setDate(String date){
         this.date = date;
     }
     public void setGoal(int goal){

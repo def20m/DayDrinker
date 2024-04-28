@@ -6,13 +6,10 @@
         app:key="notifications"
         app:title="Enable message notifications"/>
 
-    <ListPreference
-        app:key="water_intake"
-        app:title="Select Daily Water Intake"
-        app:entries="@array/water_intake"
-        app:entryValues="@array/water_intake_values"
-        app:useSimpleSummaryProvider="true"
-        />
+    <EditTextPreference
+        app:key="daily_intake"
+        app:title="Enter daily water intake:"
+        app:useSimpleSummaryProvider="true" />
 
     <ListPreference
         app:key="notification_rate"

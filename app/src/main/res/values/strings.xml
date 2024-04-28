@@ -30,14 +30,14 @@
         <item>4 cups</item>
     </string-array>
     <string-array name="notification_rate_values">
-        <item>45_min</item>
         <item>1_hour</item>
-        <item>1_hour_30_min</item>
+        <item>2_hours</item>
+        <item>3_hours</item>
     </string-array>
     <string-array name="notification_rate">
-        <item>45 min</item>
         <item>1 hour</item>
-        <item>1 hour 30 min</item>
+        <item>2 hours</item>
+        <item>3 hours</item>
     </string-array>
 
     <string name="channel_name">Log your water intake in:</string>
