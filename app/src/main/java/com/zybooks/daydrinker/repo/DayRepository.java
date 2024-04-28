@@ -27,6 +27,12 @@ public class DayRepository {
     private static final ExecutorService databaseExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    public static final String COLUMN_ID = "Day";
+    public static final String COLUMN_DATE = "Date";
+    public static final String COLUMN_GOAL = "Goal";
+    public static final String COLUMN_PROGRESS = "Intake";
+    public static final String COLUMN_STREAK = "Streak";
+
     public static DayRepository getInstance(Context context) {
         if (dayRepo == null) {
             dayRepo = new DayRepository(context);
@@ -65,6 +71,7 @@ public class DayRepository {
         });
     }
 
+
     public Day getCurrentDay(){
             return dayDao.getCurrentDay();
     }
@@ -73,7 +80,9 @@ public class DayRepository {
         List<Day> week = dayDao.getCurrentWeek();
         List<String> weekString = new ArrayList<>();
         for ( Day d : week ) {
-            weekString.add(d.toString());
+            String formattedDay = String.format("%-20s%-10s%-10s", d.getDate(), d.getGoal(), d.getProgress());
+            weekString.add(formattedDay);
+            //weekString.add(d.toString());
         }
         return weekString;
     }

@@ -20,18 +20,25 @@ public class CalendarFragment extends Fragment {
 
     DayRepository dayRepo;
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("CalendarFragment", "Fragment is being created");
 
         dayRepo = DayRepository.getInstance(this.getContext());
-
         View contentView = inflater.inflate(R.layout.activity_calendar, container, false);
+
+        TextView columnNamesTextView = contentView.findViewById(R.id.columnNamesTextView);
+
+        String columnNames = DayRepository.COLUMN_DATE + "                  " + DayRepository.COLUMN_GOAL + "     " + DayRepository.COLUMN_PROGRESS;
+        columnNamesTextView.setText(columnNames);
+
         ListView listView = contentView.findViewById(R.id.currentWeek);
 
         Adapter listAdapter = new Adapter(dayRepo.getCurrentWeek());
-
         listView.setAdapter(listAdapter);
+
+        int streak = dayRepo.getCurrentStreak();
+        TextView streakTextView = contentView.findViewById(R.id.streak);
+        streakTextView.setText(String.valueOf(streak));
 
         return contentView;
     }

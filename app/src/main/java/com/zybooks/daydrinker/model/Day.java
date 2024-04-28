@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 public class Day {
 
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
     @ColumnInfo(name = "dayId")
     private int dayId;
 

@@ -8,7 +8,7 @@
 
     <EditTextPreference
         app:key="daily_intake"
-        app:title="Enter daily water intake:"
+        app:title="Enter daily water intake goal (cups):"
         app:useSimpleSummaryProvider="true" />
 
     <ListPreference

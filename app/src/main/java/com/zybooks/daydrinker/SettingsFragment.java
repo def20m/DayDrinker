@@ -31,6 +31,10 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 try {
                     int newDailyIntake = Integer.parseInt(newValue.toString());
                     if(newDailyIntake < 50 && newDailyIntake > 1){
+                        HomeFragment homeFragment = (HomeFragment) getParentFragmentManager().findFragmentById(R.id.labelGoal);
+                        if (homeFragment != null) {
+                            homeFragment.setTodayGoal(newDailyIntake);
+                        }
                         return true;
                     }else{
                         Toast.makeText(getActivity(), "Invalid Input. Please enter a whole number between 1 and 50.", Toast.LENGTH_SHORT).show();
