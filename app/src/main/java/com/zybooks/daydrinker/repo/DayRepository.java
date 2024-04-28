@@ -57,7 +57,7 @@ public class DayRepository {
         newDay.setGoal(12);
         newDay.setProgress(0);
         newDay.setStreak(0);
-        dayDao.addDay(newDay);
+        addDay(newDay);
     }
 
     public void addDay(Day day){
@@ -67,7 +67,7 @@ public class DayRepository {
     }
 
     public Day getCurrentDay(){
-        return dayDao.getCurrentDay();
+            return dayDao.getCurrentDay();
     }
 
     public List<Day> getCurrentWeek(){
