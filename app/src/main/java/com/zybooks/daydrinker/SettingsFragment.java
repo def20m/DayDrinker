@@ -42,8 +42,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                             homeFragment.setTodayGoal(newDailyIntake);
                         }
                         Day currentDay = dayRepo.getCurrentDay();
-                        currentDay.setGoal(newDailyIntake);
-                        dayRepo.addDay(currentDay);
+                        if(currentDay.getProgress() == 0 || newDailyIntake > currentDay.getGoal()) {
+                            currentDay.setGoal(newDailyIntake);
+                            dayRepo.addDay(currentDay);
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Goal cannot be lowered once progress for the day has been entered.", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
                         return true;
                     }else{
                         Toast.makeText(getActivity(), "Invalid Input. Please enter a whole number between 1 and 50.", Toast.LENGTH_SHORT).show();

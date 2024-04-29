@@ -75,11 +75,11 @@ public class HomeFragment extends Fragment {
 
         int defaultValue = 0;
         String dailyIntakeString = preferences.getString("daily_intake", null);
-        int dailyIntake;
+        int drankGoal;
         if (dailyIntakeString != null) {
-            dailyIntake = Integer.parseInt(dailyIntakeString);
+            drankGoal = Integer.parseInt(dailyIntakeString);
         } else {
-            dailyIntake = defaultValue;
+            drankGoal = defaultValue;
         }
 
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -89,12 +89,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    Log.d("total water drank:", String.valueOf(totalDrank));
+                    //Log.d("total water drank:", String.valueOf(totalDrank));
                     int amtDrank = Integer.parseInt(editTextNumberCups.getText().toString());
-                    totalDrank = amtDrank + totalDrank;
+                    int oldDrank = dayRepo.getCurrentDay().getProgress();
+                    totalDrank = amtDrank + oldDrank;
                     Day currentDay = dayRepo.getCurrentDay();
                     currentDay.setProgress(totalDrank);
                     dayRepo.addDay(currentDay);
+
+                    if (totalDrank >= drankGoal && oldDrank < drankGoal) {
+                        int currentStreak = currentDay.getStreak();
+                        currentStreak++;
+                        currentDay.setStreak(currentStreak);
+                    }
 
                     waterIntakeView.setCurrentIntake();
                 } catch (NumberFormatException e) {
@@ -110,13 +117,13 @@ public class HomeFragment extends Fragment {
 
         if (!latestDate.equals(date)) {
             Log.d("HomeFragment", "onCreateView: Database update triggered");
-            updateDatabase(dailyIntake, totalDrank);
+            updateDatabase(drankGoal);
         } else {
             Log.d("HomeFragment", "onCreateView: Database update not triggered");
         }
     }
 
-    public void updateDatabase(int dailyIntake, int totalDrank) {
+    public void updateDatabase(int dailyIntake) {
 
         Day newDay = new Day();
         SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
@@ -128,16 +135,11 @@ public class HomeFragment extends Fragment {
         int streak = dayRepo.getCurrentStreak();
 
         newDay.setDate(date);
-        newDay.setDayId(dayId);
+        newDay.setDayId(dayId+1);
         newDay.setGoal(dailyIntake);
-        Log.d("HomeFragment", "Progress: " + totalDrank);
-        newDay.setProgress(totalDrank);
+        //Log.d("HomeFragment", "Progress: " + totalDrank);
+        newDay.setProgress(0);
 
-        if (totalDrank >= dailyIntake) {
-            streak++;
-        } else {
-            streak = 0;
-        }
         newDay.setStreak(streak);
         dayRepo.addDay(newDay);
     }
