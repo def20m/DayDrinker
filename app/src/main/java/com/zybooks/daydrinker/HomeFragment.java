@@ -92,7 +92,11 @@ public class HomeFragment extends Fragment {
                     Log.d("total water drank:", String.valueOf(totalDrank));
                     int amtDrank = Integer.parseInt(editTextNumberCups.getText().toString());
                     totalDrank = amtDrank + totalDrank;
-                    waterIntakeView.setCurrentIntake(totalDrank);
+                    Day currentDay = dayRepo.getCurrentDay();
+                    currentDay.setProgress(totalDrank);
+                    dayRepo.addDay(currentDay);
+
+                    waterIntakeView.setCurrentIntake();
                 } catch (NumberFormatException e) {
                     editTextNumberCups.setError("Please enter a valid number");
                 }

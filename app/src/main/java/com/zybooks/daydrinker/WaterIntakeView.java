@@ -15,6 +15,8 @@ import android.os.Parcelable;
 
 import androidx.preference.PreferenceManager;
 
+import com.zybooks.daydrinker.repo.DayRepository;
+
 import java.util.Locale;
 
 public class WaterIntakeView extends View {
@@ -23,6 +25,7 @@ public class WaterIntakeView extends View {
     private Paint paintArc;
     private RectF oval;
     private float sweepAngle = 0;
+    private DayRepository dayRepo;
 
     // Water intake variables
     private int goalValue;
@@ -30,6 +33,7 @@ public class WaterIntakeView extends View {
 
     public WaterIntakeView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        dayRepo = DayRepository.getInstance(this.getContext());
         init();
     }
 
@@ -91,10 +95,11 @@ public class WaterIntakeView extends View {
         int xPos = getWidth() / 2;
         int yPos = (int) ((getHeight() / 2) - ((paintText.descent() + paintText.ascent()) / 2));
         canvas.drawText(percentage, xPos, yPos, paintText);
-        setCurrentIntake(currentIntake);
+        setCurrentIntake();
     }
 
-    public void setCurrentIntake(int intake) {
+    public void setCurrentIntake() {
+        int intake = dayRepo.getCurrentDay().getProgress();
         this.currentIntake = intake;
         updateSweepAngle();
         invalidate();
@@ -125,7 +130,7 @@ public class WaterIntakeView extends View {
 
         SavedState savedState = (SavedState) state;
         super.onRestoreInstanceState(savedState.getSuperState());
-        setCurrentIntake(savedState.currentIntake);
+        setCurrentIntake();
     }
 
     static class SavedState extends BaseSavedState {

@@ -40,6 +40,10 @@ public class CalendarFragment extends Fragment {
         TextView streakTextView = contentView.findViewById(R.id.streak);
         streakTextView.setText(String.valueOf(streak));
 
+        int maxStreak = dayRepo.getMaxStreak();
+        TextView maxStreakTextView = contentView.findViewById(R.id.maxStreak);
+        maxStreakTextView.setText(String.valueOf(maxStreak));
+
         return contentView;
     }
 

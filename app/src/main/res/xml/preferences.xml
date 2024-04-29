@@ -2,21 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <SwitchPreferenceCompat
-        app:key="notifications"
-        app:title="Enable message notifications"/>
-
     <EditTextPreference
         app:key="daily_intake"
         app:title="Enter daily water intake goal (cups):"
         app:useSimpleSummaryProvider="true" />
-
-    <ListPreference
-        app:key="notification_rate"
-        app:title="Select Notification Rate"
-        app:entries="@array/notification_rate"
-        app:entryValues="@array/notification_rate_values"
-        app:useSimpleSummaryProvider="true"
-        />
 
 </PreferenceScreen>

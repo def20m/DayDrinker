@@ -15,12 +15,18 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.zybooks.daydrinker.model.Day;
 import com.zybooks.daydrinker.repo.DayRepository;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
+    DayRepository dayRepo;
+
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+        dayRepo = DayRepository.getInstance(this.getContext());
+
         setPreferencesFromResource(R.xml.preferences, rootKey);
 
         EditTextPreference dailyIntake = (EditTextPreference)
@@ -35,6 +41,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         if (homeFragment != null) {
                             homeFragment.setTodayGoal(newDailyIntake);
                         }
+                        Day currentDay = dayRepo.getCurrentDay();
+                        currentDay.setGoal(newDailyIntake);
+                        dayRepo.addDay(currentDay);
                         return true;
                     }else{
                         Toast.makeText(getActivity(), "Invalid Input. Please enter a whole number between 1 and 50.", Toast.LENGTH_SHORT).show();
