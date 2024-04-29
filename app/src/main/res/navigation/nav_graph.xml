@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_calendar"
         android:name="com.zybooks.daydrinker.CalendarFragment"
-        android:label="Calendar"
+        android:label="Calender"
         tools:layout="@layout/activity_calendar" />
 
     <fragment
