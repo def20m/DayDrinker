@@ -36,12 +36,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         dayRepo = DayRepository.getInstance(this.getContext());
 
+        //inflates the layout
         View contentView = inflater.inflate(R.layout.activity_home, container, false);
         TextView goalTextView = contentView.findViewById(R.id.goal);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
         String goalString = preferences.getString("daily_intake", "12");
 
         int goalValue;
@@ -64,17 +67,21 @@ public class HomeFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         Log.d("HomeFragment", "Fragment is being created");
+
         dayRepo = DayRepository.getInstance(this.getContext());
 
         calendar = Calendar.getInstance(TimeZone.getDefault());
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         WaterIntakeView waterIntakeView = view.findViewById(R.id.waterIntakeView);
+
         editTextNumberCups = view.findViewById(R.id.editTextNumberCups);
         buttonSubmit = view.findViewById(R.id.buttonSubmit);
 
+        //default daily intake
         int defaultValue = 0;
-        String dailyIntakeString = preferences.getString("daily_intake", null);
+
+        String dailyIntakeString = preferences.getString("daily_intake", "12");
         int drankGoal;
         if (dailyIntakeString != null) {
             drankGoal = Integer.parseInt(dailyIntakeString);
@@ -85,16 +92,21 @@ public class HomeFragment extends Fragment {
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         Log.d("HomeFragment", "onCreateView: dayOfMonth: " + dayOfMonth);
 
+        //submit button listener
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     //Log.d("total water drank:", String.valueOf(totalDrank));
                     int amtDrank = Integer.parseInt(editTextNumberCups.getText().toString());
+
+                    //amount for this day in the repository
                     int oldDrank = dayRepo.getCurrentDay().getProgress();
                     totalDrank = amtDrank + oldDrank;
+
                     Day currentDay = dayRepo.getCurrentDay();
                     currentDay.setProgress(totalDrank);
+                    //updates the current day in the repo
                     dayRepo.addDay(currentDay);
 
                     if (totalDrank >= drankGoal && oldDrank < drankGoal) {
@@ -102,7 +114,7 @@ public class HomeFragment extends Fragment {
                         currentStreak++;
                         currentDay.setStreak(currentStreak);
                     }
-
+                    //updates the UI w/current intake
                     waterIntakeView.setCurrentIntake();
                 } catch (NumberFormatException e) {
                     editTextNumberCups.setError("Please enter a valid number");
@@ -110,9 +122,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //formats the date
         SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
         String date = ft.format(new Date());
 
+        //retrieves the date stored in the repo for the current day
         String latestDate = dayRepo.getCurrentDay().getDate();
 
         if (!latestDate.equals(date)) {
@@ -123,26 +137,37 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    //called to update the database w a new entry for the current day
     public void updateDatabase(int dailyIntake) {
 
         Day newDay = new Day();
+
+        //gets the current date
         SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
         String date = ft.format(new Date());
 
+        //gets information about the current day from the repository
         Day currentDay = dayRepo.getCurrentDay();
         int dayId = currentDay.getDayId();
         Log.d("HomeFragment", "Day ID: " + dayId);
-        int streak = dayRepo.getCurrentStreak();
+        int streak;
 
+        //sets the attributes of the newDay object
         newDay.setDate(date);
         newDay.setDayId(dayId+1);
-        newDay.setGoal(dailyIntake);
+        if (currentDay.getProgress() >= currentDay.getGoal())
+        {
+            newDay.setStreak(currentDay.getStreak());
+        }
+        else {
+            newDay.setStreak(0);
+        }
         //Log.d("HomeFragment", "Progress: " + totalDrank);
         newDay.setProgress(0);
-
-        newDay.setStreak(streak);
+        newDay.setGoal(currentDay.getGoal());
         dayRepo.addDay(newDay);
     }
+
     public void setTodayGoal(int dailyIntake) {
             TextView goalTextView = getView().findViewById(R.id.goal);
             goalTextView.setText(String.valueOf(dailyIntake));
