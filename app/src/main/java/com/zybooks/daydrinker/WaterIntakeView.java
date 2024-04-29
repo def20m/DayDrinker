@@ -62,7 +62,7 @@ public class WaterIntakeView extends View {
     protected void onDraw(Canvas canvas) {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String goalString = preferences.getString("daily_intake", "0"); // "0" is the default value if the preference is not found
+        String goalString = preferences.getString("daily_intake", "12"); // "0" is the default value if the preference is not found
 
         try {
             goalValue = Integer.parseInt(goalString);

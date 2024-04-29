@@ -29,7 +29,6 @@ public class HomeFragment extends Fragment {
     private int drank;
     private int amtDrank = 0;
     Calendar calendar = Calendar.getInstance();
-    private int lastCheckedDay = 0;
     private WaterIntakeView waterIntakeView;
     private SettingsFragment dailyIntake;
     DayRepository dayRepo;
@@ -37,12 +36,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        dayRepo = DayRepository.getInstance(this.getContext());
 
         View contentView = inflater.inflate(R.layout.activity_home, container, false);
         TextView goalTextView = contentView.findViewById(R.id.goal);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String goalString = preferences.getString("daily_intake", "0");
+        String goalString = preferences.getString("daily_intake", "12");
 
         int goalValue;
         try {
@@ -62,7 +62,6 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        lastCheckedDay = preferences.getInt("last_checked_day", 0);
 
         Log.d("HomeFragment", "Fragment is being created");
         dayRepo = DayRepository.getInstance(this.getContext());
@@ -84,7 +83,6 @@ public class HomeFragment extends Fragment {
         }
 
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        Log.d("HomeFragment", "onCreateView: lastCheckedDay: " + lastCheckedDay);
         Log.d("HomeFragment", "onCreateView: dayOfMonth: " + dayOfMonth);
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
@@ -101,22 +99,20 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        if (lastCheckedDay != dayOfMonth) {
+        SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
+        String date = ft.format(new Date());
+
+        String latestDate = dayRepo.getCurrentDay().getDate();
+
+        if (!latestDate.equals(date)) {
             Log.d("HomeFragment", "onCreateView: Database update triggered");
             updateDatabase(dailyIntake, totalDrank);
-            lastCheckedDay = dayOfMonth;
         } else {
             Log.d("HomeFragment", "onCreateView: Database update not triggered");
         }
     }
 
     public void updateDatabase(int dailyIntake, int totalDrank) {
-
-        lastCheckedDay = calendar.get(Calendar.DAY_OF_MONTH);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("last_checked_day", lastCheckedDay);
-        editor.apply();
 
         Day newDay = new Day();
         SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy");
@@ -128,7 +124,7 @@ public class HomeFragment extends Fragment {
         int streak = dayRepo.getCurrentStreak();
 
         newDay.setDate(date);
-        newDay.setDayId(dayId + 1);
+        newDay.setDayId(dayId);
         newDay.setGoal(dailyIntake);
         Log.d("HomeFragment", "Progress: " + totalDrank);
         newDay.setProgress(totalDrank);
