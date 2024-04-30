@@ -1,6 +1,5 @@
 package com.zybooks.daydrinker.repo;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.*;
 import com.zybooks.daydrinker.model.Day;
 import java.util.List;

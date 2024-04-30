@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Parcel;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.os.Parcelable;
 
@@ -73,7 +72,6 @@ public class WaterIntakeView extends View {
         } catch (NumberFormatException e) {
             goalValue = 0;
         }
-        Log.d("HomeFragment", "goalValue: " + goalValue);
         super.onDraw(canvas);
 
         int width = getWidth();
@@ -90,8 +88,7 @@ public class WaterIntakeView extends View {
         canvas.drawArc(oval, -90, sweepAngle, false, paintArc);
 
         String percentage = String.format(Locale.getDefault(), "%.0f%%", (currentIntake / (float) goalValue) * 100);
-        Log.d("HomeFragment", "CURRENT INTAKE " + currentIntake);
-        Log.d("HomeFragment", "PERCENTAGE " + percentage);
+
         int xPos = getWidth() / 2;
         int yPos = (int) ((getHeight() / 2) - ((paintText.descent() + paintText.ascent()) / 2));
         canvas.drawText(percentage, xPos, yPos, paintText);

@@ -2,7 +2,6 @@ package com.zybooks.daydrinker;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,7 @@ import com.zybooks.daydrinker.model.Day;
 import com.zybooks.daydrinker.repo.DayRepository;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 
 public class HomeFragment extends Fragment {
@@ -28,7 +25,6 @@ public class HomeFragment extends Fragment {
     private int totalDrank;
     private int drank;
     private int amtDrank = 0;
-    Calendar calendar = Calendar.getInstance();
     private WaterIntakeView waterIntakeView;
     private SettingsFragment dailyIntake;
     DayRepository dayRepo;
@@ -66,12 +62,9 @@ public class HomeFragment extends Fragment {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-        Log.d("HomeFragment", "Fragment is being created");
 
         dayRepo = DayRepository.getInstance(this.getContext());
 
-        calendar = Calendar.getInstance(TimeZone.getDefault());
-        calendar.setTimeInMillis(System.currentTimeMillis());
 
         WaterIntakeView waterIntakeView = view.findViewById(R.id.waterIntakeView);
 
@@ -89,15 +82,11 @@ public class HomeFragment extends Fragment {
             drankGoal = defaultValue;
         }
 
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        Log.d("HomeFragment", "onCreateView: dayOfMonth: " + dayOfMonth);
-
         //submit button listener
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    //Log.d("total water drank:", String.valueOf(totalDrank));
                     int amtDrank = Integer.parseInt(editTextNumberCups.getText().toString());
 
                     //amount for this day in the repository
@@ -107,13 +96,13 @@ public class HomeFragment extends Fragment {
                     Day currentDay = dayRepo.getCurrentDay();
                     currentDay.setProgress(totalDrank);
                     //updates the current day in the repo
-                    dayRepo.addDay(currentDay);
 
                     if (totalDrank >= drankGoal && oldDrank < drankGoal) {
                         int currentStreak = currentDay.getStreak();
                         currentStreak++;
                         currentDay.setStreak(currentStreak);
                     }
+                    dayRepo.addDay(currentDay);
                     //updates the UI w/current intake
                     waterIntakeView.setCurrentIntake();
                 } catch (NumberFormatException e) {
@@ -130,10 +119,7 @@ public class HomeFragment extends Fragment {
         String latestDate = dayRepo.getCurrentDay().getDate();
 
         if (!latestDate.equals(date)) {
-            Log.d("HomeFragment", "onCreateView: Database update triggered");
             updateDatabase(drankGoal);
-        } else {
-            Log.d("HomeFragment", "onCreateView: Database update not triggered");
         }
     }
 
@@ -149,7 +135,6 @@ public class HomeFragment extends Fragment {
         //gets information about the current day from the repository
         Day currentDay = dayRepo.getCurrentDay();
         int dayId = currentDay.getDayId();
-        Log.d("HomeFragment", "Day ID: " + dayId);
         int streak;
 
         //sets the attributes of the newDay object
@@ -162,7 +147,6 @@ public class HomeFragment extends Fragment {
         else {
             newDay.setStreak(0);
         }
-        //Log.d("HomeFragment", "Progress: " + totalDrank);
         newDay.setProgress(0);
         newDay.setGoal(currentDay.getGoal());
         dayRepo.addDay(newDay);

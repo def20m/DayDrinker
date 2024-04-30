@@ -1,16 +1,9 @@
 package com.zybooks.daydrinker;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,15 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (navHostFragment != null) {
             NavController navController = navHostFragment.getNavController();
-            Log.d("MainActivity", "NavController initialized");
 
             AppBarConfiguration appBarConfig = new AppBarConfiguration.Builder(
                     R.id.navigation_calendar, R.id.navigation_home, R.id.navigation_settings)
                     .build();
 
             NavigationUI.setupWithNavController(navView, navController);
-        } else {
-            Log.d("MainActivity", "NavHostFragment not found");
         }
 
     }
